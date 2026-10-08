@@ -24,3 +24,6 @@ jobs:
 
       - name: Build and test with Maven
         run: mvn clean package
+
+      - name: Build Docker image
+        run: docker build -t quickshop:${{ github.sha }} .
