@@ -36,3 +36,19 @@ jobs:
           severity: 'HIGH,CRITICAL'
           exit-code: '1'
           
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Tag Docker image
+        run: |
+          docker tag quickshop:${{ github.sha }} bustopsy777/quickshop:${{ github.sha }}
+          docker tag quickshop:${{ github.sha }} bustopsy777/quickshop:latest
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push bustopsy777/quickshop:${{ github.sha }}
+          docker push bustopsy777/quickshop:latest
+          
